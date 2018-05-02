@@ -7,8 +7,6 @@ var Migrations = artifacts.require("./Migrations.sol");
 module.exports = function(deployer, network, addresses) {
   const config = TruffleConfig.networks[network];
 
-  console.log(process.env.ACCOUNT_PASSWORD);
-
   if (process.env.ACCOUNT_PASSWORD) {
     const web3 = new Web3(new Web3.providers.HttpProvider('http://' + config.host + ':' + config.port));
 
