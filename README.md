@@ -103,3 +103,9 @@ My Balance: 0
 Done
 ```
 
+## Bug
+### Github Issue
+Submit your issues at [New issue](https://github.com/LanguageNetwork/record-rewarding-poc/issues/new)
+
+### Email
+Send your issues to [kcrong@langnet.io](mailto:kcrong@langnet.io)
