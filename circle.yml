@@ -13,12 +13,14 @@ jobs:
                 command: |
                     apt update
                     apt install curl -y
+                    pip3 install -r requirements.txt
             - run:
                 name: install dependencies
                 command: |
                     curl -sL https://deb.nodesource.com/setup_9.x | bash
                     apt install nodejs git -y
-                    npm install ganache-cli truffle -g
+                    npm install ganache-cli -g
+                    npm install
 
             - run:
                 name: run test
