@@ -16,14 +16,6 @@ contract TestBasicToken {
         Assert.equal(1000, expected, "Comparing Integer");
     }
 
-    function testConstructor() public {
-        BasicToken node = BasicToken(DeployedAddresses.BasicToken());
-
-        address owner = node.owner();
-
-        Assert.equal(owner, tx.origin, "Constructor Testing");
-    }
-
     function testDefaultTokenAmount() public {
         BasicToken node = new BasicToken();
 
