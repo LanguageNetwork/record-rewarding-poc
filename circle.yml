@@ -15,14 +15,14 @@ jobs:
                 name: install pre-dependencies
                 command: |
                     apt update
-                    apt install curl python3-pip -y
+                    apt install curl python3-pip libssl-dev -y
                     pip3 install -r requirements.txt
             - run:
                 name: install dependencies
                 command: |
                     curl -sL https://deb.nodesource.com/setup_9.x | bash
                     apt install nodejs git -y
-                    npm install ganache-cli -g
+                    npm install ganache-cli truffle -g
                     npm install
 
             - run:
