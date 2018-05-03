@@ -33,6 +33,17 @@ while True:
 
 contract_address = tx_receipt['contractAddress']
 
+# or you can use a fixed address of contract
+
+# $ NETWORK=dev
+# $ TOKEN_NAME=BasicToken
+# Use `$ truffle migrate --network $NETWORK --reset | grep "$TOKEN_NAME: 0x" | awk '{print $2}'`
+
+
+# from eth_utils import to_checksum_address
+# contract_address = to_checksum_address('0xaccfca461819407de89a19aec6e622df7e1040ea')
+
+
 # Instantiate and deploy contract
 contract_instance = w3.eth.contract(abi=contract_abi, address=contract_address, ContractFactoryClass=ConciseContract)
 
