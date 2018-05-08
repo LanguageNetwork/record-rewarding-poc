@@ -8,13 +8,21 @@ var sResultFileSize = '';
 
 function secondsToTime(secs) { // we will use this function to convert seconds in normal time format
     var hr = Math.floor(secs / 3600);
-    var min = Math.floor((secs - (hr * 3600))/60);
-    var sec = Math.floor(secs - (hr * 3600) -  (min * 60));
+    var min = Math.floor((secs - (hr * 3600)) / 60);
+    var sec = Math.floor(secs - (hr * 3600) - (min * 60));
 
-    if (hr < 10) {hr = "0" + hr; }
-    if (min < 10) {min = "0" + min;}
-    if (sec < 10) {sec = "0" + sec;}
-    if (hr) {hr = "00";}
+    if (hr < 10) {
+        hr = "0" + hr;
+    }
+    if (min < 10) {
+        min = "0" + min;
+    }
+    if (sec < 10) {
+        sec = "0" + sec;
+    }
+    if (hr) {
+        hr = "00";
+    }
     return hr + ':' + min + ':' + sec;
 };
 
@@ -39,7 +47,7 @@ function fileSelected() {
 
     // filter for image files
     var rFilter = /^(image\/bmp|image\/gif|image\/jpeg|image\/png|image\/tiff)$/i;
-    if (! rFilter.test(oFile.type)) {
+    if (!rFilter.test(oFile.type)) {
         document.getElementById('error').style.display = 'block';
         return;
     }
@@ -55,7 +63,7 @@ function fileSelected() {
 
     // prepare HTML5 FileReader
     var oReader = new FileReader();
-        oReader.onload = function(e){
+    oReader.onload = function (e) {
 
         // e.target.result contains the DataURL which we will use as a source of the image
         oImage.src = e.target.result;
@@ -97,7 +105,6 @@ function startUploading() {
     var oXHR = new XMLHttpRequest();
     oXHR.upload.addEventListener('progress', uploadProgress, false);
     oXHR.addEventListener('load', uploadFinish, false);
-    oXHR.addEventListener('message', processLog, false);
     oXHR.addEventListener('error', uploadError, false);
     oXHR.addEventListener('abort', uploadAbort, false);
     oXHR.open('POST', 'upload');
@@ -123,9 +130,9 @@ function doInnerUpdates() { // we will use this function to display upload speed
     // update speed info
     var iSpeed = iDiff.toString() + 'B/s';
     if (iDiff > 1024 * 1024) {
-        iSpeed = (Math.round(iDiff * 100/(1024*1024))/100).toString() + 'MB/s';
+        iSpeed = (Math.round(iDiff * 100 / (1024 * 1024)) / 100).toString() + 'MB/s';
     } else if (iDiff > 1024) {
-        iSpeed =  (Math.round(iDiff * 100/1024)/100).toString() + 'KB/s';
+        iSpeed = (Math.round(iDiff * 100 / 1024) / 100).toString() + 'KB/s';
     }
 
     document.getElementById('speed').innerHTML = iSpeed;
@@ -162,12 +169,8 @@ function uploadFinish(e) { // upload successfully finished
     document.getElementById('filesize').innerHTML = sResultFileSize;
     document.getElementById('remaining').innerHTML = '| 00:00:00';
 
-    clearInterval(oTimer);
-}
 
-function processLog(e) {
-    console.log('Data income');
-    console.log(e.data);
+    clearInterval(oTimer);
 }
 
 function uploadError(e) { // upload error
