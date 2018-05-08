@@ -1,9 +1,16 @@
+import logging
 from tempfile import NamedTemporaryFile
 
-import time
-from flask import Flask, render_template, send_from_directory, request, send_file, stream_with_context, Response
+import ipfsapi
+from flask import Flask, render_template, request
 
 app = Flask(__name__, static_url_path='/static', static_folder='static')
+
+# Change according to your ipfs node setting
+api = ipfsapi.connect('localhost', 5001)
+
+logger = app.logger
+logger.setLevel(logging.DEBUG)
 
 
 @app.route('/')
@@ -14,17 +21,14 @@ def index():
 @app.route('/upload', methods=['POST'])
 def upload():
     name = NamedTemporaryFile(delete=False).name
-    print("Saved: {}".format(name))
+    logger.info("Saved: {}".format(name))
     request.files['image_file'].save(name)
+    hash_value = api.add(name)['Hash']
 
-    def generate():
-        yield 'id: 123'
-        time.sleep(2)
-        yield 'data: hello'
-        time.sleep(10)
-        yield 'data: {}'.format(name)
+    local_url = "http://localhost:8080/ipfs/{}".format(hash_value)
+    ipfsio_url = "https://ipfs.io/ipfs/{}".format(hash_value)
 
-    return Response(stream_with_context(generate()), mimetype="text/event-stream")
+    return "<a href={}>{}</a><br><a href={}>{}</a>".format(local_url, local_url, ipfsio_url, ipfsio_url)
 
 
 if __name__ == '__main__':
