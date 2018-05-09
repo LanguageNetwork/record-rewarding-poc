@@ -43,7 +43,7 @@ function fileSelected() {
     document.getElementById('warnsize').style.display = 'none';
 
     // get selected file element
-    var oFile = document.getElementById('image_file').files[0];
+    var oFile = document.getElementById('voice_file').files[0];
 
     // filter for image files
     var rFilter = /^(image\/bmp|image\/gif|image\/jpeg|image\/png|image\/tiff)$/i;

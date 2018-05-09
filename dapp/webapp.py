@@ -18,11 +18,28 @@ def index():
     return render_template('index.html')
 
 
+def validate_voice(voice):
+
+    # Add voice validation with zeroth
+    return True
+
+
 @app.route('/upload', methods=['POST'])
 def upload():
     name = NamedTemporaryFile(delete=False).name
     logger.info("Saved: {}".format(name))
-    request.files['image_file'].save(name)
+    request.files['voice_file'].save(name)
+
+    # Validate_voice
+    if validate_voice(name):  # Validated
+        # earn token
+        pass
+
+    else:  # Failed
+        # ignore
+        pass
+
+    # Upload voice
     hash_value = api.add(name)['Hash']
 
     local_url = "http://localhost:8080/ipfs/{}".format(hash_value)

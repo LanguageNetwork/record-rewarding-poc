@@ -57,7 +57,7 @@ input[type=button] {
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dfdfdf')";
     background: linear-gradient(#ffffff, #dfdfdf);
 }
-#image_file {
+#voice_file {
     width:400px;
 }
 #progress_info {
