@@ -16,8 +16,11 @@
     <div class="upload_form_cont">
         <form id="upload_form" enctype="multipart/form-data" method="post" action="upload.php">
             <div>
-                <div><label for="voice_file">Please select image file</label></div>
+                <div><label for="voice_file">Please select voice audio file</label></div>
                 <div><input type="file" name="voice_file" id="voice_file" onchange="fileSelected();"/></div>
+                <br>
+                <div><label for="wallet_addr">Please type your wallet address</label></div>
+                <div><input type="text" name="wallet_addr" id="wallet_addr"/></div>
             </div>
             <div>
                 <input type="button" value="Upload" onclick="startUploading()"/>
