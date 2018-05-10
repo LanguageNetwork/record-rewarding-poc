@@ -109,3 +109,8 @@ Submit your issues at [New issue](https://github.com/LanguageNetwork/record-rewa
 
 ### Email
 Send your issues to [kcrong@langnet.io](mailto:kcrong@langnet.io)
+
+
+## Etherscan
+- [Contract](https://ropsten.etherscan.io/address/0xFb294910d8193DeB9a294B51F22D8878ad15f2E8)
+
