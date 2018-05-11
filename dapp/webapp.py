@@ -7,11 +7,11 @@ import ipfsapi
 from eth_utils import to_checksum_address
 from flask import Flask, render_template, request
 from web3 import HTTPProvider, Web3
+from web3.contract import ConciseContract
 from web3.middleware import geth_poa_middleware
 
 PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
 BUILD_PATH = os.path.join(PROJECT_PATH, '../', 'build')
-
 
 app = Flask(__name__, static_url_path='/static', static_folder='static')
 
@@ -46,6 +46,7 @@ private_key = 'd023453ce76a4b3308a5ca755d9b044feb2f0403809d09357d43d6cf5a9598bc'
 
 # Contract obj
 contract = w3.eth.contract(abi=contract_abi, address=contract_address)
+concise_contract = w3.eth.contract(abi=contract_abi, address=contract_address, ContractFactoryClass=ConciseContract)
 
 
 @app.route('/')
@@ -62,11 +63,20 @@ def make_url_html(url):
     return "<a href={}>{}</a>".format(url, url)
 
 
+def get_token(wallet_address):
+    return concise_contract.getBalance(wallet_address)
+
+
 def give_token(wallet_address):
     func_obj = contract.functions.giveToken(wallet_address, 100)
     txn = func_obj.buildTransaction({'nonce': w3.eth.getTransactionCount(account_address)})
     signed = w3.eth.account.signTransaction(txn, private_key=private_key)
     return w3.eth.sendRawTransaction(signed.rawTransaction)
+
+
+@app.route('/get_token')
+def get_token():
+    return get_token(request.args['wallet'])
 
 
 @app.route('/upload', methods=['POST'])
