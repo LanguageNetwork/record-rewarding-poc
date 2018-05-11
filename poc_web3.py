@@ -44,7 +44,7 @@ contract = w3.eth.contract(abi=contract_abi, bytecode=contract_bin)
 #
 
 from eth_utils import to_checksum_address
-contract_address = to_checksum_address('0xFb294910d8193DeB9a294B51F22D8878ad15f2E8')
+contract_address = to_checksum_address('0xb5c06482224aeeab84adcbe79574efe135feb4bd')
 
 # Instantiate and deploy contract
 contract_instance = w3.eth.contract(abi=contract_abi, address=contract_address, ContractFactoryClass=ConciseContract)
