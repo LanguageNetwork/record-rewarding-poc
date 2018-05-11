@@ -1,3 +1,4 @@
+import os
 import json
 import logging
 from tempfile import NamedTemporaryFile
@@ -7,6 +8,10 @@ from eth_utils import to_checksum_address
 from flask import Flask, render_template, request
 from web3 import HTTPProvider, Web3
 from web3.middleware import geth_poa_middleware
+
+PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
+BUILD_PATH = os.path.join(PROJECT_PATH, '../', 'build')
+
 
 app = Flask(__name__, static_url_path='/static', static_folder='static')
 
@@ -26,12 +31,12 @@ w3 = Web3(HTTPProvider('https://ropsten.infura.io/'))
 w3.middleware_stack.inject(geth_poa_middleware, layer=0)
 
 # BasicToken abi
-with open('build/contracts/BasicToken.json', 'r') as f:
+with open(os.path.join(BUILD_PATH, 'contracts/BasicToken.json'), 'r') as f:
     contract_meta_json = json.loads(f.read())
     contract_abi = contract_meta_json['abi']
 
 # Contract address in ropsten
-contract_address = to_checksum_address('0xFb294910d8193DeB9a294B51F22D8878ad15f2E8')
+contract_address = to_checksum_address('0xb5c06482224aeeab84adcbe79574efe135feb4bd')
 
 # Owner address in ropsten
 account_address = to_checksum_address('0xa37288ca4E6562045b66fD9482C68a22F3caA6b3')
@@ -88,7 +93,7 @@ def upload():
     return "<br>".join([
         make_url_html(local_url),
         make_url_html(ipfsio_url),
-        make_url_html('https://ropsten.etherscan.io/tx/{}'.format(txn_hash))
+        make_url_html('https://ropsten.etherscan.io/tx/{}'.format(txn_hash.hex()))
     ])
 
 
