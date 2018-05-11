@@ -1,3 +1,8 @@
+var HDWalletProvider = require("truffle-hdwallet-provider");
+
+var ropsten_account = "0xa37288ca4E6562045b66fD9482C68a22F3caA6b3";
+var ropsten_mnemonic = "ginger assist wine pistol horn glass pledge hip calm round gas flower";
+
 module.exports = {
     networks: {
         geth: {
@@ -16,10 +21,13 @@ module.exports = {
             gasPrice: 100000 // Specified in Wei
         },
         ropsten: {
-            host:"localhost",
-            port:8545,
-            network_id: 3,
-            from: "0x8F8d1bc97E8939e3932BfBeb923A1B2B972D5A9A",
+            provider: function () {
+                return new HDWalletProvider(ropsten_mnemonic, "https://ropsten.infura.io/", 0);
+            },
+            network_id: "3",
+            gas: 4692388,
+            gasPrice: 32000000000, // Specified in Wei
+            from: ropsten_account
         }
     },
     rpc: {
