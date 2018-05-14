@@ -3,6 +3,9 @@
 
 POC for token reward of the voice recording 
 
+## Before get started
+***The voice uploaded here is not earning the LANG token.***
+
 ## Install dependencies
 
 For OS X, you can use `brew` as well
