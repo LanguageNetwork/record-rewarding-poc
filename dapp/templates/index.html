@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
     <title>LangNet POC</title>
 </head>
 <body>
@@ -51,9 +52,50 @@
         </form>
 
         <img id="preview"/>
+
+        <div>Your balance: <b id="balance_number">0</b> LANG</div>
     </div>
 </div>
 </body>
+<script>
+
+    // Update Balance
+    var num = document.getElementById('balance_number');
+
+    function getBalance(theUrl) {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("GET", theUrl, false); // false for synchronous request
+        xmlHttp.send(null);
+        return xmlHttp.responseText;
+    }
+
+    playAlert = setInterval(function () {
+        var wallet_value = document.getElementById('wallet_addr').value;
+        var balance = getBalance('balance?wallet=' + wallet_value);
+
+        if (parseInt(num.innerText) !== parseInt(balance)) {
+            alert('Balance has been changed. Please check')
+        }
+
+        num.innerText = balance;
+    }, 3000);
+
+
+    window.addEventListener('load', function () {
+        // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+        if (typeof web3 !== 'undefined') {
+            // Use Mist/MetaMask's provider
+            web3 = new Web3(web3.currentProvider);
+            console.log('Metamask was found.');
+            document.getElementById('wallet_addr').value = web3.eth.defaultAccount;
+        } else {
+            console.log('Metamask was not found.');
+            alert('Metamask was not found. We recommend using metamask')
+        }
+    });
+
+
+</script>
 </html>
 
 
