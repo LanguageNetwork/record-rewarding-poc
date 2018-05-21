@@ -3,6 +3,9 @@
 
 POC for token reward of the voice recording 
 
+## Before get started
+***The voice uploaded here is not earning the LANG token.***
+
 ## Install dependencies
 
 For OS X, you can use `brew` as well
@@ -109,3 +112,8 @@ Submit your issues at [New issue](https://github.com/LanguageNetwork/record-rewa
 
 ### Email
 Send your issues to [kcrong@langnet.io](mailto:kcrong@langnet.io)
+
+
+## Etherscan
+- [Contract](https://ropsten.etherscan.io/address/0xb5c06482224aeeab84adcbe79574efe135feb4bd)
+

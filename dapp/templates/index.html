@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+    <title>LangNet POC</title>
+</head>
+<body>
+<header>
+    <h2>Pure HTML5 file upload</h2>
+</header>
+<div class="container">
+    <div class="contr"><h2>You can select the file (image) and click Upload button</h2></div>
+
+    <div class="upload_form_cont">
+        <form id="upload_form" enctype="multipart/form-data" method="post" action="upload.php">
+            <div>
+                <div><label for="voice_file">Please select voice audio file</label></div>
+                <div><input type="file" name="voice_file" id="voice_file" onchange="fileSelected();"/></div>
+                <br>
+                <div><label for="wallet_addr">Please type your wallet address</label></div>
+                <div><input type="text" name="wallet_addr" id="wallet_addr"/></div>
+            </div>
+            <div>
+                <input type="button" value="Upload" onclick="startUploading()"/>
+            </div>
+            <div id="fileinfo">
+                <div id="filename"></div>
+                <div id="filesize"></div>
+                <div id="filetype"></div>
+                <div id="filedim"></div>
+            </div>
+            <div id="error">You should select valid image files only!</div>
+            <div id="error2">An error occurred while uploading the file</div>
+            <div id="abort">The upload has been canceled by the user or the browser dropped the connection</div>
+            <div id="warnsize">Your file is very big. We can't accept it. Please select more small file</div>
+
+            <div id="progress_info">
+                <div id="progress"></div>
+                <div id="progress_percent">&nbsp;</div>
+                <div class="clear_both"></div>
+                <div>
+                    <div id="speed">&nbsp;</div>
+                    <div id="remaining">&nbsp;</div>
+                    <div id="b_transfered">&nbsp;</div>
+                    <div class="clear_both"></div>
+                </div>
+                <div id="upload_response"></div>
+            </div>
+        </form>
+
+        <img id="preview"/>
+
+        <div>Your balance: <b id="balance_number">0</b> LANG</div>
+    </div>
+</div>
+</body>
+<script>
+
+    // Update Balance
+    var num = document.getElementById('balance_number');
+
+    function getBalance(theUrl) {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("GET", theUrl, false); // false for synchronous request
+        xmlHttp.send(null);
+        return xmlHttp.responseText;
+    }
+
+    playAlert = setInterval(function () {
+        var wallet_value = document.getElementById('wallet_addr').value;
+        var balance = getBalance('balance?wallet=' + wallet_value);
+
+        if (parseInt(num.innerText) !== parseInt(balance)) {
+            alert('Balance has been changed. Please check')
+        }
+
+        num.innerText = balance;
+    }, 3000);
+
+
+    window.addEventListener('load', function () {
+        // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+        if (typeof web3 !== 'undefined') {
+            // Use Mist/MetaMask's provider
+            web3 = new Web3(web3.currentProvider);
+            console.log('Metamask was found.');
+            document.getElementById('wallet_addr').value = web3.eth.defaultAccount;
+        } else {
+            console.log('Metamask was not found.');
+            alert('Metamask was not found. We recommend using metamask')
+        }
+    });
+
+
+</script>
+</html>
+
+
+
+
+
